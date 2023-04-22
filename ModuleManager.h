@@ -10,20 +10,23 @@
 #include <vector>
 #include <unordered_map>
 #include <memory>
+#include <algorithm>
 #include <filesystem>
+#include "Module.h"
 
 class ModuleManager {
 private:
     const std::string MODULE_PATH = "./modules";
-
 #ifdef _WINDOWS//判断系统的类型决定要加载的动态库的类型
     const std::string  MODULE_TYPE_NAME = "dll";
-#elifdef linux
+#endif
+#ifdef linux
     const std::string MODULE_TYPE_NAME = "so";
 #endif
 
-    std::unordered_map<std::string,HINSTANCE>mModuleMap;//模块的名字和模块的句柄的对照表
+    std::unordered_map<std::string,std::shared_ptr<Module>>mModuleMap;//模块的名字和模块的句柄的对照表
     std::shared_ptr<spdlog::logger> mLogger;//日志记录器对象
+    std::shared_ptr<Module> LoadModule(const std::string moduleName);//加载单个模块
 public:
     void LoadAllModules();//加载所有的模块到内存中
     ModuleManager();//构造函数

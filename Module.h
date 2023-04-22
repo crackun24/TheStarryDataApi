@@ -8,6 +8,7 @@
 #include <windows.h>
 #include <iostream>
 #include <hv/http_client.h>
+#include <codecvt>
 
 typedef int (*moduleMainFunc)(HttpRequest *req,HttpResponse *rep);//模块中的函数类型
 
@@ -16,7 +17,7 @@ private:
     HMODULE mModuleHandle;//模块的句柄
     FARPROC mMainFuncAddress;//主函数的函数地址
 public:
-    void LoadModule(const std::string moduleAddress);//按照地址加载动态链接库
+    Module(const std::string moduleAddress);//按照地址加载动态链接库
     ~Module();//析构函数
 };
 
