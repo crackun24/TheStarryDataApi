@@ -29,15 +29,19 @@ private:
     const std::string MODULE_TYPE_NAME = "so";
 #endif
 
-    void LoadAllLibrary();//加载所有的库
     std::unordered_map<std::string, std::shared_ptr<Module>> mModuleMap;//模块的名字和模块的句柄的对照表
+    std::vector<std::shared_ptr<DllLoader>> mLibList;//库文件的队列
+
     std::shared_ptr<spdlog::logger> mLogger;//日志记录器对象
     std::shared_ptr<Module> LoadModule(const std::string &moduleName);//加载单个模块
+    std::shared_ptr<DllLoader> LoadLibrary(const std::string &libraryName);//加载单个库
     std::string mLoadPath;//加载dll的路径
     std::string mLoaderName;//加载器的名字,(模块或库)
     LoaderType mLoaderType;
+    void LoadAllModule();//加载模块
+    void LoadAllLib();//加载库
 public:
-    void LoadAllModules();//加载所有的模块到内存中
+    void LoadAll();//加载所有的dll到内存中
     ModuleManager(LoaderType type);//构造函数
 };
 
