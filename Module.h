@@ -14,6 +14,7 @@ typedef int (*moduleMainFunc)(HttpRequest *req,HttpResponse *rep);//模块中的
 
 class Module {
 private:
+    std::wstring_convert<std::codecvt_utf8<wchar_t>> mConvert;//字符转换对象
     HMODULE mModuleHandle;//模块的句柄
     FARPROC mMainFuncAddress;//主函数的函数地址
 public:

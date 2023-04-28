@@ -15,6 +15,7 @@ using namespace std;
 
 int main()
 {
+    SetErrorMode(SEM_FAILCRITICALERRORS);//设置发生错误时,不会弹窗,防止阻塞程序
 if(_access("./logs",0) == -1)//判断日志存放文件夹是否存在
     _mkdir("./logs");
 
@@ -23,7 +24,7 @@ if(_access("./logs",0) == -1)//判断日志存放文件夹是否存在
     auto logger = make_shared<spdlog::logger>("TheStarryDataApi", sinks_init_list{console_sink, daily_sink});
     register_logger(logger);//注册日志记录器
 
-    unique_ptr<ModuleManager>moduleManager(new ModuleManager());//创建一个模块管理对象
+    unique_ptr<ModuleManager>moduleManager(new ModuleManager(LoaderType::module));//创建一个模块管理对象
     moduleManager->LoadAllModules();
 
     getchar();

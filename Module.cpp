@@ -14,8 +14,7 @@ if(this->mModuleHandle != NULL)
 }
 
 Module::Module(const string moduleAddress) {
-    wstring_convert<codecvt_utf8<wchar_t>> convert;//字符转换对象
-    wstring temp = convert.from_bytes(moduleAddress);//string 转换为 wstring
+    wstring temp = this->mConvert.from_bytes(moduleAddress);//string 转换为 wstring
 
     this->mModuleHandle = LoadLibrary(temp.c_str());//以unicode 的方式加载动态链接库
     if(this->mModuleHandle == NULL)//判断模块是否被正确加载
