@@ -24,7 +24,7 @@ link_libraries(libProp
         )
 
 
-add_executable(${PROJECT_NAME} "main.cpp" main.cpp ModuleManager.cpp ModuleManager.h Module.cpp Module.h)
+add_executable(${PROJECT_NAME} "main.cpp" main.cpp ModuleManager.cpp ModuleManager.h Module.cpp Module.h DataApi.h)
 
 target_link_libraries(${PROJECT_NAME}
         glog

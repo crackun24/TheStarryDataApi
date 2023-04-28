@@ -34,6 +34,7 @@ private:
     std::shared_ptr<spdlog::logger> mLogger;//日志记录器对象
     std::shared_ptr<Module> LoadModule(const std::string &moduleName);//加载单个模块
     std::string mLoadPath;//加载dll的路径
+    std::string mLoaderName;//加载器的名字,(模块或库)
     LoaderType mLoaderType;
 public:
     void LoadAllModules();//加载所有的模块到内存中
