@@ -15,13 +15,33 @@ void Core::InitService() {
     this->mLibraryMgr->LoadAll();//加载所有的库
     this->mModuleMgr->LoadAll();//加载所有的模块
     this->mModuleMap = this->mModuleMgr->GetModuleList();//获取模块和名字的对照表
+    this->mConfig = libProp::Config::Parse("./config.properties");//加载配置文件
 }
 
 void Core::RunService() {
-    InitService();//初始化服务
-    VerifyModuleService();//验证服务
+    try {
+        InitService();//初始化服务
+        VerifyModuleService();//验证服务
+    } catch (const exception &e) {
+        this->mLogger->error("An error occurred when initializing the service,error msg {}.", e.what());
+    }
 
+    HttpService service;
+    for (auto &temp: this->mServiceModuleMap)//遍历列表
+    {
+        if (temp.second)//添加服务
+        {
+            string serviceName = "/" + temp.second->GetServiceName();//获取运行的服务的名字
+            this->mLogger->info("Enabling {}", serviceName);
+            service.GET(serviceName.c_str(), temp.second->GetServiceFunc());
+        }
+    }
 
+    http_server_t server;
+    server.service = &service;
+    server.port = this->mConfig["servicePort"];
+
+    http_server_run(&server);//运行服务
 }
 
 void Core::VerifyModuleService() {
@@ -45,4 +65,8 @@ void Core::VerifyModuleService() {
             this->mServiceModuleMap.insert(make_pair(serviceName, shared_ptr<Module>(temp.second)));
         }
     }
+}
+
+void Core::RunHttpService() {
+
 }

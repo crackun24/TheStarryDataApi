@@ -9,6 +9,7 @@
 #include <spdlog/spdlog.h>
 #include <set>
 #include <iostream>
+#include <libProp.h>
 #include "ModuleManager.h"
 
 class Core {//核心对象
@@ -18,6 +19,7 @@ private:
     std::shared_ptr<spdlog::logger> mLogger;//日志记录器对象
     std::shared_ptr<ModuleManager> mModuleMgr;//模块管理对象
     std::shared_ptr<ModuleManager> mLibraryMgr; //库管理对象
+    libProp::Config mConfig;//配置文件
     void InitService();//初始化服务
     void VerifyModuleService();//校验模块中的服务是否符合要求
     void RunHttpService();//运行http服务
