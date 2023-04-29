@@ -24,7 +24,7 @@ link_libraries(libProp
         )
 
 
-add_executable(${PROJECT_NAME} "main.cpp" main.cpp ModuleManager.cpp ModuleManager.h Module.cpp Module.h DllLoader.cpp DllLoader.h)
+add_executable(${PROJECT_NAME} "main.cpp" main.cpp ModuleManager.cpp ModuleManager.h Module.cpp Module.h DllLoader.cpp DllLoader.h Core.cpp Core.h)
 
 target_link_libraries(${PROJECT_NAME}
         glog

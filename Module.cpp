@@ -18,22 +18,22 @@ void Module::VerifyApi() {
 
     this->mApiData = this->mRegFunc();//加载api的数据
 
-    shared_lock<shared_mutex> lg(this->mLocker);
     if (this->mApiData.apiVersion > API_VERSION)//判断模块的版本是否大于加载器的api版本
         throw logic_error("Module version is higher than loader version.");
 }
 
 int Module::GetModuleApiVersion() {
-    shared_lock<shared_mutex> lg(this->mLocker);
     return this->mApiData.apiVersion;
 }
 
 std::string Module::GetModuleName() {
-    shared_lock<shared_mutex> lg(this->mLocker);
     return this->mApiData.moduleName;
 }
 
 std::string Module::GetServiceName() {
-    shared_lock<shared_mutex> lg(this->mLocker);
     return this->mApiData.apiServiceName;
+}
+
+moduleMainFunc Module::GetServiceFunc() {
+   return this->mMainFunc;//返回服务的函数指针
 }

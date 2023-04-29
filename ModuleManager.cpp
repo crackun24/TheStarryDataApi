@@ -148,3 +148,7 @@ shared_ptr<DllLoader> ModuleManager::LoadLibrary(const string &libraryName) {//�
 
     return library;//返回库的智能指针对象
 }
+
+NameModuleMap ModuleManager::GetModuleList() {
+   return this->mModuleMap;
+}

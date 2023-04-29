@@ -18,6 +18,8 @@ typedef enum{
     library, module
 }LoaderType;//判断要管理的dll类型是库还是模块
 
+typedef std::unordered_map<std::string,std::shared_ptr<Module> > NameModuleMap;
+
 class ModuleManager {
 private:
     const std::string MODULE_PATH = "./modules";
@@ -29,7 +31,7 @@ private:
     const std::string MODULE_TYPE_NAME = "so";
 #endif
 
-    std::unordered_map<std::string, std::shared_ptr<Module>> mModuleMap;//模块的名字和模块的句柄的对照表
+    NameModuleMap mModuleMap;//模块的文件名字和模块的句柄的对照表
     std::vector<std::shared_ptr<DllLoader>> mLibList;//库文件的队列
 
     std::shared_ptr<spdlog::logger> mLogger;//日志记录器对象
@@ -42,6 +44,7 @@ private:
     void LoadAllLib();//加载库
 public:
     void LoadAll();//加载所有的dll到内存中
+    NameModuleMap GetModuleList();//获取模块名字和单个对象的对照
     ModuleManager(LoaderType type);//构造函数
 };
 

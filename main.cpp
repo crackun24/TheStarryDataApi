@@ -8,7 +8,7 @@
 #include <io.h>
 #include <direct.h>
 #include <memory>
-#include "ModuleManager.h"
+#include "Core.h"
 
 using namespace spdlog;
 using namespace std;
@@ -24,11 +24,8 @@ if(_access("./logs",0) == -1)//判断日志存放文件夹是否存在
     auto logger = make_shared<spdlog::logger>("TheStarryDataApi", sinks_init_list{console_sink, daily_sink});
     register_logger(logger);//注册日志记录器
 
-    unique_ptr<ModuleManager>libManager(new ModuleManager(LoaderType::library));//创建一个库管理对象
-    libManager->LoadAll();
-
-    unique_ptr<ModuleManager>moduleManager(new ModuleManager(LoaderType::module));//创建一个模块管理对象
-    moduleManager->LoadAll();
+    shared_ptr<Core>core = make_shared<Core>();//创建一个核心对象
+    core->RunService();//运行核心服务
 
     getchar();
     return 0;
