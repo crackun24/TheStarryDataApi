@@ -6,6 +6,7 @@
 #define THESTARRYDATAAPI_MODULE_H
 
 #include <windows.h>
+#include <format>
 #include <iostream>
 #include <shared_mutex>
 #include <hv/http_client.h>

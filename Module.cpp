@@ -18,8 +18,14 @@ void Module::VerifyApi() {
 
     this->mApiData = this->mRegFunc();//加载api的数据
 
+    int errCode = GetLastError();
+    if (errCode != 0) {//判断加载api数据时的错误代码是否正常
+       throw runtime_error(to_string(errCode));
+    }
+
     if (this->mApiData.apiVersion > API_VERSION)//判断模块的版本是否大于加载器的api版本
-        throw logic_error("Module version is higher than loader version.");
+        throw logic_error(
+                format("Module version is higher than loader version. Module version: {}.", this->mApiData.apiVersion));
 }
 
 int Module::GetModuleApiVersion() {
@@ -35,5 +41,5 @@ std::string Module::GetServiceName() {
 }
 
 moduleMainFunc Module::GetServiceFunc() {
-   return this->mMainFunc;//返回服务的函数指针
+    return this->mMainFunc;//返回服务的函数指针
 }
